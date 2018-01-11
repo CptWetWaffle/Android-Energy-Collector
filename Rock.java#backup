@@ -1,0 +1,72 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class Rock here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Rock extends Actor
+{
+
+    protected final int aceleration=40;
+    protected final int top;
+    protected int jump;
+    
+    
+    public Rock(){
+    this(15);
+    }
+    
+    public Rock(int aceleration){
+    this.top=aceleration;
+    this.jump=aceleration;
+    }
+    
+    public void move(){
+
+        if(canSee(Persona.class))
+        if (Greenfoot.isKeyDown("right")){
+            setLocation(getX()+aceleration,getY());
+
+            if (canSee(Wall.class)) {
+                setLocation(getX()-aceleration,getY());
+            }
+        }else if(Greenfoot.isKeyDown("left")){
+            setLocation(getX()-aceleration,getY());
+            if (canSee(Wall.class)) {
+                setLocation(getX()+aceleration,getY());
+            }
+        }
+    }     
+    
+
+    
+    
+    protected void gravity() {
+    if(jump>=0)
+       jump--;
+    if(jump==0){
+        setLocation(getX(),getY()+aceleration);
+        if (canSee(Wall.class) || canSee(Persona.class)) {
+            setLocation(getX(),getY()-aceleration);
+        }
+    jump=top;
+    }
+    
+}
+    
+    public void act() 
+    {
+        // Add your action code here.
+        
+    }    
+
+
+public boolean canSee(Class clss)
+    {
+        Actor actor = getOneObjectAtOffset(0, 0, clss);
+        return actor != null;        
+    }
+   
+}
